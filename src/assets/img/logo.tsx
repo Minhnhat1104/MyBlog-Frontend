@@ -1,4 +1,6 @@
-const logoImage = ({ width = '2.4rem', height = '2.4rem', className, ...props }) => {
+import React from 'react';
+
+const logoImage = ({ width = '2.4rem', height = '2.4rem', className, ...props }: any) => {
     return (
         <svg
             width="130"

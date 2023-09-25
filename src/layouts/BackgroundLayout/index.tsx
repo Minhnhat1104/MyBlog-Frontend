@@ -1,12 +1,14 @@
-import { Header } from '../Component';
+import Header from '../Component/Header';
 import classNames from 'classnames/bind';
-import style from './DefaultLayout.module.scss';
+import style from './BackgroundLayout.module.scss';
+import React from 'react';
 
 const cx = classNames.bind(style);
 
-function DefaultLayout({ children }) {
+function BackgroundLayout({ children }: any) {
     return (
         <>
+            <div className={cx('app-container')}></div>
             <Header />
             <div className={cx('wrapper')}>
                 <div className={cx('container')}>
@@ -17,4 +19,4 @@ function DefaultLayout({ children }) {
     );
 }
 
-export default DefaultLayout;
+export default BackgroundLayout;

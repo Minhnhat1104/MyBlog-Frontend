@@ -8,12 +8,14 @@ import { loginSuccess } from '~/redux/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
-import Logo from '~/assets/img/logo.js';
+import Logo from '~/assets/img/logo';
+import React from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const cx = classNames.bind(style);
 
 function Header() {
-    const user = useSelector((state) => state.auth.login?.currentUser);
+    const user = useSelector((state: any) => state.auth.login?.currentUser);
     const accessToken = user?.accessToken;
     const id = user?._id;
     const navigate = useNavigate();
@@ -36,10 +38,10 @@ function Header() {
                 {user ? (
                     <div className={cx('left-container')}>
                         <Button large iconOnly outline to="/upload">
-                            <FontAwesomeIcon icon={faUpload} />
+                            <FontAwesomeIcon icon={faUpload as IconProp} />
                         </Button>
                         <Button large iconOnly outline to="/">
-                            <FontAwesomeIcon icon={faImage} />
+                            <FontAwesomeIcon icon={faImage as IconProp} />
                         </Button>
                         <Button large disabled>
                             {user.username}

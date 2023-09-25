@@ -1,5 +1,6 @@
 import style from './Button.module.scss';
 import classNames from 'classnames/bind';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(style);
@@ -22,8 +23,8 @@ function Button({
     className,
     onClick,
     ...passProps
-}) {
-    let Comp = 'button';
+}: any) {
+    let Comp: any = 'button';
     const props = {
         onClick,
         ...passProps,

@@ -7,7 +7,7 @@ export const getImagesPage = async (pageParam = 1, options = {}) => {
 };
 
 const useImages = (pageNum = 1) => {
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [error, setError] = useState({});
@@ -29,7 +29,7 @@ const useImages = (pageNum = 1) => {
                     setIsError(true);
                     setError({ message: 'Out of photos' });
                 }
-                setResults((prev) => [...prev, ...data]);
+                setResults((prev: any) => [...prev, ...data]);
                 sethasNextPage(true);
                 setIsLoading(false);
             })
