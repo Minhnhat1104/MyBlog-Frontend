@@ -8,7 +8,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const cx = classNames.bind(style);
 
 function LoadingIcon() {
-    return <FontAwesomeIcon className={cx('loading-icon')} icon={faSpinner as IconProp} />;
+  return <FontAwesomeIcon className={cx('loading-icon')} icon={faSpinner as IconProp} />;
 }
 
 export default LoadingIcon;

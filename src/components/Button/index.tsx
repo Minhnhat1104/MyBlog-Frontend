@@ -6,66 +6,66 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Button({
-    to,
-    href,
-    primary = false,
-    outline = false,
-    text = false,
-    rounded = false,
-    disabled = false,
-    small = false,
-    large = false,
-    leftIcon = false,
-    rightIcon = false,
-    lightGrey = false,
-    iconOnly = false,
-    children,
-    className,
-    onClick,
-    ...passProps
+  to,
+  href,
+  primary = false,
+  outline = false,
+  text = false,
+  rounded = false,
+  disabled = false,
+  small = false,
+  large = false,
+  leftIcon = false,
+  rightIcon = false,
+  lightGrey = false,
+  iconOnly = false,
+  children,
+  className,
+  onClick,
+  ...passProps
 }: any) {
-    let Comp: any = 'button';
-    const props = {
-        onClick,
-        ...passProps,
-    };
-    if (to) {
-        props.to = to;
-        Comp = Link;
-    } else if (href) {
-        props.href = href;
-        Comp = 'a';
-    }
+  let Comp: any = 'button';
+  const props = {
+    onClick,
+    ...passProps,
+  };
+  if (to) {
+    props.to = to;
+    Comp = Link;
+  } else if (href) {
+    props.href = href;
+    Comp = 'a';
+  }
 
-    // remove event when button is disabled
-    if (disabled) {
-        Object.keys(props).forEach((key) => {
-            if (key.startsWith('on') && typeof props[key] === 'function') {
-                delete props[key];
-            }
-        });
-    }
+  // remove event when button is disabled
+  if (disabled) {
+    Object.keys(props).forEach((key) => {
+      if (key.startsWith('on') && typeof props[key] === 'function') {
+        delete props[key];
+      }
+    });
+  }
 
-    const classes = {
-        [className]: className,
-        primary,
-        outline,
-        text,
-        rounded,
-        disabled,
-        small,
-        large,
-        lightGrey,
-        iconOnly,
-    };
+  const classes = {
+    [className]: className,
+    primary,
+    outline,
+    text,
+    rounded,
+    disabled,
+    small,
+    large,
+    lightGrey,
+    iconOnly,
+  };
 
-    return (
-        <Comp className={cx('wrapper', classes)} {...props}>
-            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-            <span className={cx('title')}>{children}</span>
-            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
-        </Comp>
-    );
+  return (
+    <Comp className={cx('wrapper', classes)} {...props}>
+      {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+      <span className={cx('title')}>{children}</span>
+      {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
+    </Comp>
+  );
 }
 
 export default Button;
