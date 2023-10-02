@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import LoadingIcon from '~/components/LoadingIcon';
+import LoadingIcon from '~/base/components/LoadingIcon';
 import classNames from 'classnames/bind';
 import style from './Update.module.scss';
 import { loginSuccess } from '~/redux/authSlice';

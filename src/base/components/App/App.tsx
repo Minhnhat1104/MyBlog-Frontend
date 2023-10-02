@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeCustomization from '~/base/themes';
 import { RecoilRoot } from 'recoil';
+import { Box, CssBaseline } from '@mui/material';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -27,9 +28,10 @@ function App() {
   return (
     <RecoilRoot>
       <ThemeCustomization>
+        <CssBaseline />
         <QueryClientProvider client={queryClient}>
           <Router>
-            <div className="App">
+            <Box className="App">
               <Toaster position="top-right" reverseOrder={false} />
               <Routes>
                 {publicRoutes.map((route, index) => {
@@ -51,7 +53,7 @@ function App() {
                   );
                 })}
               </Routes>
-            </div>
+            </Box>
           </Router>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

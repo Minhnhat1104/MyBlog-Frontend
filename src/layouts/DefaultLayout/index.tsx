@@ -13,9 +13,7 @@ function DefaultLayout({ children }: any) {
       <Header />
       <Box className={cx('wrapper')}>
         <Box className={cx('container')}>
-          <Box className={cx('content')} sx={{ background: theme.palette.background.paper }}>
-            {children}
-          </Box>
+          <Box className={cx('content')}>{children}</Box>
         </Box>
       </Box>
     </>

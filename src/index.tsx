@@ -17,7 +17,6 @@ root.render(
         </GlobalStyle>
       </PersistGate>
     </Provider>
-    ,
   </React.StrictMode>
 );
 

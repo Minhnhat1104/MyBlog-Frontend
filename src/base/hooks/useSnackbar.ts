@@ -16,8 +16,15 @@ export const useSnackbar = () => {
       duration: 3000,
     });
   };
-  const enqueueError = () => {
-    toast.success;
+  const enqueueError = (msg: string) => {
+    toast.error(msg, {
+      // icon: <DoneOutlinedIcon />,
+      iconTheme: {
+        primary: theme.palette.success.main,
+        secondary: theme.palette.secondary.main,
+      },
+      duration: 3000,
+    });
   };
   return { enqueueSuccess, enqueueError };
 };

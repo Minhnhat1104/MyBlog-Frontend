@@ -4,12 +4,13 @@ import { useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createAxios } from '~/tools/createInstance';
 import { loginSuccess } from '~/redux/authSlice';
+import { LoadingButton } from '@mui/lab';
 
 import useImages from '~/hooks/useImages';
 
 const Image = lazy(() => import('~/components/Image'));
 import Counter from '~/tools/countRender';
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import LoadingCircular from '~/components/LoadingCircular';
 
 function Home() {
@@ -47,7 +48,7 @@ function Home() {
   return (
     <>
       <Counter />
-      {/* <Grid container>
+      <Grid container>
         {results?.map((singleData: any, i: number) => {
           return (
             <Grid item xs={12} md={4} key={singleData._id}>
@@ -57,15 +58,11 @@ function Home() {
             </Grid>
           );
         })}
-      </Grid> */}
+      </Grid>
 
-      {isFetching ? (
-        <LoadingCircular />
-      ) : (
-        <Button variant="contained" onClick={() => setPageNum(pageNum + 1)}>
-          Load More
-        </Button>
-      )}
+      <LoadingButton variant="contained" onClick={() => setPageNum(pageNum + 1)} loading={isFetching}>
+        Load More
+      </LoadingButton>
     </>
   );
 }

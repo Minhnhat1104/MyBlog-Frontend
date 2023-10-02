@@ -19,15 +19,10 @@ function Image(props: ImageProps, ref: ForwardedRef<any>) {
   const { singleData, user, handleDelete } = props;
 
   const theme = useTheme();
-  const base64String = btoa(
-    new Uint8Array(singleData.image.data.data).reduce(function (data, byte) {
-      return data + String.fromCharCode(byte);
-    }, '')
-  );
 
   return (
     <Box className={cx('img-fluid')}>
-      <img loading="lazy" className={cx('img')} src={`data:image/png;base64,${base64String}`} alt="" />
+      <img loading="lazy" className={cx('img')} src={singleData.imageUrl} alt="" />
       <Box className={cx('overlay')}>
         <Box className={cx('img-content')}>
           <Box className={cx('author')}>
@@ -56,8 +51,8 @@ function Image(props: ImageProps, ref: ForwardedRef<any>) {
         <IconButton
           size="medium"
           className={cx('download-btn')}
-          href={`data:image/png;base64,${base64String}`}
-          download={`data:image/png;base64,${base64String}`}
+          href={singleData.imageUrl}
+          download={singleData.imageUrl}
           color="secondary"
         >
           <FontAwesomeIcon icon={faDownload as IconProp} />
