@@ -1,14 +1,14 @@
 .wrapper {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    background-color: var(--white);
-    margin-left: -8px;
-    margin-right: -8px;
-    max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  // background-color: var(--white);
+  margin-left: -8px;
+  margin-right: -8px;
+  max-width: 100%;
 }
 
 .col-4 {
-    width: 33.33%;
+  width: 33.33%;
 }

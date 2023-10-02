@@ -2,18 +2,22 @@ import Header from '../Component/Header';
 import classNames from 'classnames/bind';
 import style from './DefaultLayout.module.scss';
 import React from 'react';
+import { Box, useTheme } from '@mui/material';
 
 const cx = classNames.bind(style);
 
 function DefaultLayout({ children }: any) {
+  const theme = useTheme();
   return (
     <>
       <Header />
-      <div className={cx('wrapper')}>
-        <div className={cx('container')}>
-          <div className={cx('content')}>{children}</div>
-        </div>
-      </div>
+      <Box className={cx('wrapper')}>
+        <Box className={cx('container')}>
+          <Box className={cx('content')} sx={{ background: theme.palette.background.paper }}>
+            {children}
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 }

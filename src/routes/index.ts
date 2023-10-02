@@ -1,5 +1,9 @@
 import config from '~/config';
-import { Home, Login, Register, Update, Upload } from '~/pages';
+import Home from '~/pages/Home';
+import Login from '~/pages/Login';
+import Register from '~/pages/Register';
+import Update from '~/pages/Update';
+import Upload from '~/pages/Upload';
 import DefaultLayout from '~/layouts';
 import BackgroundLayout from '~/layouts/BackgroundLayout';
 

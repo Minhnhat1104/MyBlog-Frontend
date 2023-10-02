@@ -1,4 +1,4 @@
-import Button from '~/components/Button';
+import { Box, Button, IconButton, Stack, Switch, Typography, useTheme } from '@mui/material';
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,11 +11,15 @@ import { faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Logo from '~/assets/img/logo';
 import React from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import useConfig from '~/base/hooks/useConfig';
+import { ThemeMode } from '~/base/types/config';
 
 const cx = classNames.bind(style);
 
 function Header() {
   const user = useSelector((state: any) => state.auth.login?.currentUser);
+  const theme = useTheme();
+  const { mode, onChangeMode } = useConfig();
   const accessToken = user?.accessToken;
   const id = user?._id;
   const navigate = useNavigate();
@@ -28,40 +32,52 @@ function Header() {
   };
 
   return (
-    <div className={cx('wrapper')}>
-      <div className={cx('inner')}>
-        <div className={cx('right-container')}>
-          <Link to="/">
+    <Box
+      className={cx('wrapper')}
+      px={2}
+      sx={{
+        boxShadow: `0 3px 6px ${theme.palette.divider}`,
+        background: theme.palette.background.paper,
+      }}
+    >
+      <Stack direction="row" alignItems="center" className={cx('inner')}>
+        <Link to="/">
+          <Stack direction="row" alignItems="center" spacing={1} height={'100%'}>
             <Logo />
-          </Link>
-        </div>
+            <Typography color="primary" fontWeight="600" fontSize={'20px'}>
+              My Blog
+            </Typography>
+          </Stack>
+        </Link>
         {user ? (
-          <div className={cx('left-container')}>
-            <Button large iconOnly outline to="/upload">
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <IconButton size="medium" href="/upload">
               <FontAwesomeIcon icon={faUpload as IconProp} />
-            </Button>
-            <Button large iconOnly outline to="/">
+            </IconButton>
+            <IconButton size="medium" href="/">
               <FontAwesomeIcon icon={faImage as IconProp} />
-            </Button>
-            <Button large disabled>
-              {user.username}
-            </Button>
-            <Button large primary onClick={handleLogout}>
+            </IconButton>
+            <Switch
+              checked={mode === 'light'}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) =>
+                onChangeMode(checked ? 'light' : 'dark')
+              }
+            />
+            <Typography pr={1}>{user.username}</Typography>
+            <Button size="medium" variant="outlined" onClick={handleLogout}>
               Log Out
             </Button>
-          </div>
+          </Stack>
         ) : (
-          <div className={cx('left-container')}>
-            <Button primary to="/login">
-              Login
-            </Button>
-            <Button outline to="/Register">
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Button href="/login">Login</Button>
+            <Button variant="outlined" href="/Register">
               Register
             </Button>
-          </div>
+          </Stack>
         )}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 }
 
