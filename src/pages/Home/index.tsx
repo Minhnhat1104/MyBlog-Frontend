@@ -10,14 +10,15 @@ import useImages from '~/hooks/useImages';
 
 const Image = lazy(() => import('~/components/Image'));
 import Counter from '~/tools/countRender';
-import { Grid } from '@mui/material';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import LoadingCircular from '~/components/LoadingCircular';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function Home() {
   const user = useSelector((state: any) => state.auth.login?.currentUser);
   const [allImages, setAllImages] = useState([]);
-  const [pageNum, setPageNum] = useState<number>(1);
-  const { data: results, isLoading, isFetching, isError, error } = useImages({ pageNum });
+  const [pageNum, setPageNum] = useState<number>(0);
+  const { data: results, isLoading, isFetching, error } = useImages({ pageNum });
 
   const dispatch = useDispatch();
   const axoisJWT = createAxios(user, dispatch, loginSuccess);
@@ -32,8 +33,8 @@ function Home() {
     if (res.status === 200) setAllImages(allImages.filter((image: any) => image._id !== _id));
   }, []);
 
-  if (isError) {
-    console.log('🚀 ~ file: index.tsx:37 ~ error:', error);
+  if (error) {
+    console.log('Error:', error);
     return <p>Error: </p>;
   }
 
@@ -47,22 +48,42 @@ function Home() {
 
   return (
     <>
-      <Counter />
-      <Grid container>
-        {results?.map((singleData: any, i: number) => {
-          return (
-            <Grid item xs={12} md={4} key={singleData._id}>
-              <React.Suspense fallback={<LoadingCircular />}>
-                <Image user={user} handleDelete={handleDelete} singleData={singleData} />
-              </React.Suspense>
-            </Grid>
-          );
-        })}
-      </Grid>
+      {/* <Counter /> */}
+      <InfiniteScroll
+        dataLength={results?.length}
+        next={() => {
+          console.log(123456);
 
-      <LoadingButton variant="contained" onClick={() => setPageNum(pageNum + 1)} loading={isFetching}>
-        Load More
-      </LoadingButton>
+          return setPageNum((prev: number) => {
+            console.log('pageNum', prev);
+
+            return prev + 1;
+          });
+        }}
+        style={{ display: 'flex', flexDirection: 'column-reverse' }} //To put endMessage and loader to the top.
+        inverse={true} //
+        hasMore={true}
+        scrollThreshold={0}
+        loader={
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 50 }}>
+            <CircularProgress />
+          </Box>
+        }
+        height={'100%'}
+        hasChildren={results?.length}
+      >
+        <Grid container>
+          {results?.map((singleData: any, i: number) => {
+            return (
+              <Grid item xs={12} md={4} key={singleData._id}>
+                <React.Suspense fallback={<LoadingCircular />}>
+                  <Image user={user} handleDelete={handleDelete} singleData={singleData} />
+                </React.Suspense>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </InfiniteScroll>
     </>
   );
 }

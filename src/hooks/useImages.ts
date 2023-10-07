@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
+import { queryKeys } from '~/base/config/queryKeys';
 import axios from '~/tools/axios';
 
 export const getImagesPage = async (pageParam = 1, options = {}) => {
@@ -8,7 +9,6 @@ export const getImagesPage = async (pageParam = 1, options = {}) => {
 };
 
 const useImages = (params: any) => {
-  console.log('🚀 ~ file: useImages.ts:11 ~ params:', params);
   const initial_num = 9;
   const per_page = 3;
   const res = useQuery({
@@ -18,9 +18,9 @@ const useImages = (params: any) => {
       return res.data;
     },
 
-    queryKey: ['images_list', params?.pageNum],
+    queryKey: [queryKeys.imageList, params?.pageNum],
     keepPreviousData: true,
-    enabled: !!params?.pageNum,
+    enabled: !!params?.pageNum || params?.pageNum === 0,
   });
 
   return res;

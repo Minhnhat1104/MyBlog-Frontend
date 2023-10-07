@@ -115,7 +115,7 @@ const MiModal = (props: MiModalProps) => {
               '& .MuiDialog-container': {
                 justifyContent: miState.anchor === MIMODAL_ANCHOR_RIGHT ? 'flex-end' : 'center',
               },
-              top: isMobile || miState.anchor === MIMODAL_ANCHOR_RIGHT ? 0 : headerHeight,
+              top: 0,
               '.MuiBackdrop-root': { bgcolor: 'rgba(15,21,32,.5)' },
             }
       }

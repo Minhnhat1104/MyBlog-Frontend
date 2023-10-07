@@ -1,6 +1,4 @@
 import { Box, Button, IconButton, Stack, Switch, Typography, useTheme } from '@mui/material';
-import classNames from 'classnames/bind';
-import style from './Header.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { createAxios } from '~/tools/createInstance';
 import { logoutUser } from '~/tools/apiRequest';
@@ -12,11 +10,8 @@ import Logo from '~/assets/img/logo';
 import React, { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import useConfig from '~/base/hooks/useConfig';
-import { ThemeMode } from '~/base/types/config';
-import MiModal from '~/base/components/MiModal';
 import Write from '~/pages/Write';
-
-const cx = classNames.bind(style);
+import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
 
 function Header() {
   const user = useSelector((state: any) => state.auth.login?.currentUser);
@@ -37,14 +32,31 @@ function Header() {
   return (
     <>
       <Box
-        className={cx('wrapper')}
         px={2}
         sx={{
+          width: '100%',
+          height: defaultLayoutHeaderHeight,
+          // position: 'fixed',
+          top: 0,
+          zIndex: 1,
           boxShadow: `0 3px 6px ${theme.palette.divider}`,
           background: theme.palette.background.paper,
         }}
       >
-        <Stack direction="row" alignItems="center" className={cx('inner')}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{
+            margin: 'auto',
+            width: defaultLayoutWidth,
+            maxWidth: '100%',
+            height: '100%',
+            padding: '0 30px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Link to="/">
             <Stack direction="row" alignItems="center" spacing={1} height={'100%'}>
               <Logo />
@@ -89,7 +101,7 @@ function Header() {
         </Stack>
       </Box>
 
-      {openWrite && <Write isOpen={openWrite} size={'md'} onClose={() => setOpenWrite(false)} />}
+      {openWrite && <Write isOpen={openWrite} onClose={() => setOpenWrite(false)} />}
     </>
   );
 }

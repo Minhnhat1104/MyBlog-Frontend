@@ -11,16 +11,19 @@ import { LoadingButton } from '@mui/lab';
 import { useImageMutation } from '~/hooks/useImageMutation';
 import { Box, Breakpoint, Divider, Grid, InputLabel, Stack, TextField, Typography, useTheme } from '@mui/material';
 import MiModal from '~/base/components/MiModal';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '~/base/config/queryKeys';
+import { SET_TIMEOUT } from '~/base/config/constants';
 
 interface WriteProps {
   isOpen: boolean;
-  size: Breakpoint | false;
   onClose: (value: any) => void;
 }
 
 function Write(props: WriteProps) {
-  const { isOpen, size, onClose } = props;
+  const { isOpen, onClose } = props;
   const theme = useTheme();
+  const queryClient = useQueryClient();
   const user = useSelector((state: any) => state.auth.login?.currentUser);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -36,7 +39,13 @@ function Write(props: WriteProps) {
       description,
       user,
     };
-    mUpload.mutate(params);
+    mUpload.mutate(params, {
+      onSuccess(data, variables, context) {
+        setTimeout(() => {
+          queryClient.invalidateQueries([queryKeys.imageList]);
+        }, SET_TIMEOUT);
+      },
+    });
   };
 
   const Footer = (
@@ -56,7 +65,7 @@ function Write(props: WriteProps) {
   );
 
   return (
-    <MiModal title={'Upload image'} isOpen={isOpen} size={size} onClose={onClose} footer={Footer}>
+    <MiModal title={'Upload image'} isOpen={isOpen} size="sm" onClose={onClose} footer={Footer}>
       {user ? (
         <Box p={2}>
           <Box width="100%">

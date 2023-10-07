@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import LoadingIcon from '~/base/components/LoadingIcon';
 import classNames from 'classnames/bind';
 import style from './Update.module.scss';
 import { loginSuccess } from '~/redux/authSlice';
@@ -8,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '~/components/Button';
 import { createAxios } from '~/tools/createInstance';
 import React from 'react';
+import LoadingCircular from '~/components/LoadingCircular';
 
 const cx = classNames.bind(style);
 
@@ -108,7 +108,7 @@ function Update() {
       ) : (
         ''
       )}
-      ;{showLoading && <LoadingIcon />}
+      ;{showLoading && <LoadingCircular />}
     </>
   );
 }

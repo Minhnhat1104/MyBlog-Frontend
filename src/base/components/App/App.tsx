@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DefaultLayout from '../../../layouts/DefaultLayout';
 import publicRoutes from '~/routes';
 
-import './App.css';
 import { Toaster } from 'react-hot-toast';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -31,29 +30,27 @@ function App() {
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
           <Router>
-            <Box className="App">
-              <Toaster position="top-right" reverseOrder={false} />
-              <Routes>
-                {publicRoutes.map((route, index) => {
-                  let Layout = DefaultLayout;
-                  if (route.layout) {
-                    Layout = route.layout;
-                  }
-                  const Element = route.element;
-                  return (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      element={
-                        <Layout>
-                          <Element />
-                        </Layout>
-                      }
-                    />
-                  );
-                })}
-              </Routes>
-            </Box>
+            <Toaster position="top-right" reverseOrder={false} />
+            <Routes>
+              {publicRoutes.map((route, index) => {
+                let Layout = DefaultLayout;
+                if (route.layout) {
+                  Layout = route.layout;
+                }
+                const Element = route.element;
+                return (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      <Layout>
+                        <Element />
+                      </Layout>
+                    }
+                  />
+                );
+              })}
+            </Routes>
           </Router>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
