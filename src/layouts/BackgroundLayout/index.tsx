@@ -2,7 +2,7 @@ import Header from '../Component/Header';
 import React from 'react';
 import { Box, Stack } from '@mui/material';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
-import background from 'src/assets/img/img.jpg';
+import background from '~/assets/img/img.jpg';
 
 function BackgroundLayout({ children }: any) {
   return (
