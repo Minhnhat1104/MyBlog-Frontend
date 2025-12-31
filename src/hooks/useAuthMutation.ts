@@ -13,11 +13,7 @@ export const useAuthMutation = () => {
       return res;
     },
     onSuccess(data: any, variables, context) {
-      if (data?.success) {
-        enqueueSuccess('Register user successfully!');
-      } else {
-        enqueueError('Register user failed!');
-      }
+      enqueueSuccess('Register user successfully!');
     },
     onError(data, variables, context) {
       enqueueError('Register user failed!');

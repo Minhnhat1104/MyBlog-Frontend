@@ -23,15 +23,18 @@ function Register() {
   } = useForm<RegisterFormData>();
 
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
-    const res = await mRegisterUser.mutateAsync({
-      email: data?.email,
-      username: data?.username,
-      password: data?.password,
-    });
-
-    if (res?.success) {
-      navigate('/login');
-    }
+    const res = await mRegisterUser.mutateAsync(
+      {
+        email: data?.email,
+        username: data?.username,
+        password: data?.password,
+      },
+      {
+        onSuccess: () => {
+          navigate('/login');
+        },
+      }
+    );
   };
 
   return (
