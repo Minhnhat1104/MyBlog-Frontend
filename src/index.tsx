@@ -6,6 +6,7 @@ import GlobalStyle from './components/GlobalStyle';
 import { Provider } from 'react-redux';
 import { store, persistor } from '~/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
@@ -14,6 +15,7 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <GlobalStyle>
           <App />
+          <ToastContainer />
         </GlobalStyle>
       </PersistGate>
     </Provider>

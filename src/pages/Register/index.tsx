@@ -1,67 +1,77 @@
-import { useState } from 'react';
-import classNames from 'classnames/bind';
-import style from './Register.module.scss';
-import Button from '~/components/Button';
-import { registerUser } from '~/tools/apiRequest';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { useAuthMutation } from '~/hooks/useAuthMutation';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-const cx = classNames.bind(style);
+type RegisterFormData = {
+  email: string;
+  username: string;
+  password: string;
+};
 
 function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const dispatch = useDispatch();
+  const theme = useTheme();
   const navigate = useNavigate();
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const user = {
-      email,
-      username,
-      password,
-    };
-    await registerUser(user, dispatch, navigate);
-    alert('Register success');
+  const { mRegisterUser } = useAuthMutation();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
+
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
+    const res = await mRegisterUser.mutateAsync({
+      email: data?.email,
+      username: data?.username,
+      password: data?.password,
+    });
+
+    if (res?.success) {
+      navigate('/login');
+    }
   };
+
   return (
-    <section className={cx('container')}>
-      <div className={cx('container-left')}>
-        <span className={cx('logo')}>Lmn</span>
-      </div>
-      <div className={cx('container-right')}>
-        <div className={cx('title')}>Register</div>
-        <form className={cx('form')} onSubmit={handleSubmit}>
-          <label className={cx('input-label')}>Email</label>
-          <input
-            name="email"
-            type="text"
-            placeholder="Enter your email"
-            className={cx('input')}
-            onChange={(e) => setEmail(e.target.value)}
+    <section>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack sx={{ background: theme.palette.common.white, p: 3, borderRadius: 3, width: 600 }} spacing={3}>
+          <Typography variant="h1" fontWeight={500} textAlign="center">
+            Register
+          </Typography>
+          <TextField
+            size="medium"
+            label="Email"
+            helperText={errors.email?.message}
+            error={!!errors.email}
+            type="email"
+            // placeholder="Enter your email"
+            {...register('email', { required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g })}
           />
-          <label className={cx('input-label')}>username</label>
-          <input
-            name="username"
-            type="text"
-            placeholder="Enter your username"
-            className={cx('input')}
-            onChange={(e) => setUsername(e.target.value)}
+          <TextField
+            size="medium"
+            label="Username"
+            helperText={errors.username?.message}
+            error={!!errors.username}
+            // placeholder="Enter your username"
+            {...register('username', { required: true, maxLength: 50 })}
           />
-          <label className={cx('input-label')}>password</label>
-          <input
-            name="password"
+          <TextField
+            size="medium"
+            label="Password"
             type="password"
-            placeholder="Enter your password"
-            className={cx('input')}
-            onChange={(e) => setPassword(e.target.value)}
+            helperText={errors.password?.message}
+            error={!!errors.password}
+            // placeholder="Enter your password"
+            {...register('password', { required: true, maxLength: 50 })}
           />
-          <Button className={cx('submit-btn')} type="submit" primary>
+          <Button type="submit" variant="contained">
             Create account
           </Button>
-        </form>
-      </div>
+        </Stack>
+      </form>
     </section>
   );
 }

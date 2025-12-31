@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DefaultLayout from '../../../layouts/DefaultLayout';
 import publicRoutes from '~/routes';
 
-import { Toaster } from 'react-hot-toast';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -30,7 +29,6 @@ function App() {
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
           <Router>
-            <Toaster position="top-right" reverseOrder={false} />
             <Routes>
               {publicRoutes.map((route, index) => {
                 let Layout = DefaultLayout;
