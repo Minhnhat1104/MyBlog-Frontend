@@ -1,8 +1,5 @@
 import { Box, Button, IconButton, Stack, Switch, Typography, useTheme } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { createAxios } from '~/tools/createInstance';
-import { logoutUser } from '~/tools/apiRequest';
-import { loginSuccess } from '~/redux/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -12,21 +9,16 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import useConfig from '~/base/hooks/useConfig';
 import Write from '~/pages/Write';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
+import { useAuthMutation } from '~/hooks/useAuthMutation';
 
 function Header() {
   const user = useSelector((state: any) => state.auth.login?.currentUser);
   const theme = useTheme();
   const { mode, onChangeMode } = useConfig();
-  const accessToken = user?.accessToken;
-  const id = user?._id;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const axiosJWT = createAxios(user, dispatch, loginSuccess);
-
   const [openWrite, setOpenWrite] = useState<boolean>(false);
-
+  const { mUserLogout } = useAuthMutation();
   const handleLogout = () => {
-    logoutUser(dispatch, id, navigate, accessToken, axiosJWT);
+    mUserLogout.mutateAsync({});
   };
 
   return (

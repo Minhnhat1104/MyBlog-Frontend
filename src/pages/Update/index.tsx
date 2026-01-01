@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './Update.module.scss';
-import { loginSuccess } from '~/redux/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '~/components/Button';
 import { createAxios } from '~/tools/createInstance';
 import React from 'react';
 import LoadingCircular from '~/components/LoadingCircular';
+import { useImage } from '~/hooks/useImages';
 
 const cx = classNames.bind(style);
 
@@ -16,46 +16,31 @@ function Update() {
   const [showLoading, setShowLoading] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState<any>(null);
-  const params = useParams();
+  const { _id } = useParams();
   const dispatch = useDispatch();
-  const axoisJWT = createAxios(user, dispatch, loginSuccess);
-  const accessToken = user?.accessToken;
 
-  useEffect(() => {
-    const getImage = async () => {
-      setShowLoading(true);
-      const res = await axoisJWT.get(`/v1/image/${params._id}`, {
-        headers: {
-          token: `BEARER ${accessToken}`,
-        },
-      });
-      setImage(res.data);
-      setShowLoading(false);
-    };
+  const { data } = useImage({ id: _id || '' });
 
-    getImage();
-    // eslint-disable-next-line
-  }, []);
+  const image = data || null;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const body = {
-      name,
-      description,
-      author: user?.username,
-    };
+    // const body = {
+    //   name,
+    //   description,
+    //   author: user?.username,
+    // };
 
-    try {
-      const res = await axoisJWT.patch(`/v1/image/update/${params._id}`, body, {
-        headers: {
-          token: `BEARER ${accessToken}`,
-        },
-      });
-      alert(res.data);
-    } catch (err) {
-      alert(err);
-    }
+    // try {
+    //   const res = await axoisJWT.patch(`/v1/image/update/${_id}`, body, {
+    //     headers: {
+    //       token: `BEARER ${accessToken}`,
+    //     },
+    //   });
+    //   alert(res.data);
+    // } catch (err) {
+    //   alert(err);
+    // }
     e.target.reset();
   };
 
