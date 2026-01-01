@@ -48,7 +48,6 @@
     "recoil": "^0.7.7",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
-    "typescript": "*",
     "universal-cookie": "^8.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -69,13 +68,15 @@
     "prettier": "^3.0.3",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.51.0",
+    "typescript": "^5.9.3",
     "vite": "^5.2.10"
   },
   "scripts": {
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint:fix": "eslint --cache --fix \"src/**/*.{js,jsx,ts,tsx}\""
+    "lint:fix": "eslint --cache --fix \"src/**/*.{js,jsx,ts,tsx}\"",
+    "test:typescript": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": [
