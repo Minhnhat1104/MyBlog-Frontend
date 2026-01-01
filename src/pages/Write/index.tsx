@@ -12,7 +12,7 @@ import { useImageMutation } from '~/hooks/useImageMutation';
 import { Box, Breakpoint, Divider, Grid, InputLabel, Stack, TextField, Typography, useTheme } from '@mui/material';
 import MiModal from '~/base/components/MiModal';
 import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '~/base/config/queryKeys';
+import { queryKeys } from '~/config/queryKeys';
 import { SET_TIMEOUT } from '~/base/config/constants';
 
 interface WriteProps {

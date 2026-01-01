@@ -1,36 +1,42 @@
 import React, { lazy } from 'react';
 
-import { useState, useCallback, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createAxios } from '~/tools/createInstance';
-import { loginSuccess } from '~/redux/authSlice';
-import { LoadingButton } from '@mui/lab';
+import { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 
 import useImages from '~/hooks/useImages';
 
-const Image = lazy(() => import('~/components/Image'));
-import Counter from '~/tools/countRender';
 import { Box, CircularProgress, Grid } from '@mui/material';
 import LoadingCircular from '~/components/LoadingCircular';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useImageMutation } from '~/hooks/useImageMutation';
+import { Paging } from '~/types';
+import Image from '~/components/Image';
 
 function Home() {
   const user = useSelector((state: any) => state.auth.login?.currentUser);
   const [allImages, setAllImages] = useState([]);
-  const [pageNum, setPageNum] = useState<number>(0);
-  const { data: results, isLoading, isFetching, error } = useImages({ pageNum });
-
-  const dispatch = useDispatch();
-  const axoisJWT = createAxios(user, dispatch, loginSuccess);
+  const [paging, setPaging] = useState<Paging>({ page: 1, size: 10 });
+  const {
+    data: results,
+    isInitialLoading,
+    error,
+  } = useImages({
+    page: paging?.page,
+    size: paging?.size,
+  });
+  const { mDelete } = useImageMutation();
 
   const handleDelete = useCallback(async (_id: string) => {
-    const res = await axoisJWT.delete(`/v1/image/delete/${_id}`, {
-      headers: {
-        token: `BEARER ${user?.accessToken}`,
+    const res = mDelete.mutateAsync(
+      {
+        ids: [_id],
       },
-    });
-    alert(res.data);
-    if (res.status === 200) setAllImages(allImages.filter((image: any) => image._id !== _id));
+      {
+        onSuccess: () => {
+          setAllImages(allImages.filter((image: any) => image._id !== _id));
+        },
+      }
+    );
   }, []);
 
   if (error) {
@@ -42,7 +48,7 @@ function Home() {
     return <p>Please login first!</p>;
   }
 
-  if (isLoading) {
+  if (isInitialLoading) {
     return <LoadingCircular />;
   }
 
@@ -54,11 +60,10 @@ function Home() {
         next={() => {
           console.log(123456);
 
-          return setPageNum((prev: number) => {
-            console.log('pageNum', prev);
-
-            return prev + 1;
-          });
+          return setPaging((prev) => ({
+            ...prev,
+            size: prev?.size + 10,
+          }));
         }}
         style={{ display: 'flex', flexDirection: 'column-reverse' }} //To put endMessage and loader to the top.
         inverse={true} //
@@ -76,9 +81,7 @@ function Home() {
           {results?.map((singleData: any, i: number) => {
             return (
               <Grid item xs={12} md={4} key={singleData._id}>
-                <React.Suspense fallback={<LoadingCircular />}>
-                  <Image user={user} handleDelete={handleDelete} singleData={singleData} />
-                </React.Suspense>
+                <Image user={user} handleDelete={handleDelete} singleData={singleData} />
               </Grid>
             );
           })}

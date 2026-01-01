@@ -6,11 +6,10 @@ interface LoadingCircularProps {
   loading?: boolean;
 }
 
-function LoadingCircular(props: LoadingCircularProps) {
-  const { loading } = props;
+function LoadingCircular({ loading }: LoadingCircularProps) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 300 }}>
-      <CircularProgress />
+      <CircularProgress sx={{ margin: 'auto' }} />
     </Box>
   );
 }

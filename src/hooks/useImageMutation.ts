@@ -1,11 +1,12 @@
 import axios from '~/tools/axios';
 import { useMutation } from '@tanstack/react-query';
 import { useSnackbar } from '~/base/hooks/useSnackbar';
+import { queryKeys } from '~/config/queryKeys';
 
 export const useImageMutation = () => {
   const { enqueueSuccess, enqueueError } = useSnackbar();
   const mUpload = useMutation({
-    mutationKey: [],
+    mutationKey: [queryKeys.imageUpload],
     mutationFn: async (params: any) => {
       const { imageFile, name, description, user } = params || {};
       for (let i = 0; i < imageFile?.length; i++) {
@@ -34,5 +35,21 @@ export const useImageMutation = () => {
       enqueueError('Update Images fail!');
     },
   });
-  return { mUpload };
+
+  const mDelete = useMutation({
+    mutationKey: [queryKeys.imageDelete],
+    mutationFn: async (params: any) => {
+      const res = await axios.delete('/v1/image/delete', params);
+
+      return res;
+    },
+    onSuccess(data: any, variables, context) {
+      enqueueSuccess('Delete image successfully!');
+    },
+    onError(data, variables, context) {
+      enqueueError('Delete image failed!');
+    },
+  });
+
+  return { mUpload, mDelete };
 };

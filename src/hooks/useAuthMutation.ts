@@ -1,12 +1,13 @@
 import axios from '~/tools/axios';
 import { useMutation } from '@tanstack/react-query';
 import { useSnackbar } from '~/base/hooks/useSnackbar';
+import { queryKeys } from '~/config/queryKeys';
 
 export const useAuthMutation = () => {
   const { enqueueSuccess, enqueueError } = useSnackbar();
 
   const mRegisterUser = useMutation({
-    mutationKey: [],
+    mutationKey: [queryKeys.userRegister],
     mutationFn: async (params: any) => {
       const res = await axios.post('/v1/auth/register', params);
 
