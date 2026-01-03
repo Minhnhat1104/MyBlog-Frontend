@@ -11,8 +11,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeCustomization from '~/base/themes';
 import { RecoilRoot } from 'recoil';
-import { Box, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import AxiosContext from '~/contexts/AxiosContext';
+import './App.css';
 import ToastContext from '~/contexts/ToastContext';
 
 // Create a client

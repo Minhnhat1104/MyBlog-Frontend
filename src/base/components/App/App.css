@@ -43,3 +43,8 @@ html *::-webkit-scrollbar-track {
   scrollbar-width: none; /* Firefox */
   overflow-y: auto !important;
 }
+
+[href] {
+  text-decoration: none;
+  font-style: normal;
+}

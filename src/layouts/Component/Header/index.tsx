@@ -32,7 +32,7 @@ function Header() {
           // position: 'fixed',
           top: 0,
           zIndex: 1,
-          boxShadow: `0 3px 6px ${theme.palette.divider}`,
+          // boxShadow: `0 3px 6px ${theme.palette.divider}`,
           background: theme.palette.background.paper,
         }}
       >
@@ -53,13 +53,7 @@ function Header() {
           <Link to="/">
             <Stack direction="row" alignItems="center" spacing={1} height={'100%'}>
               <Logo />
-              <Typography
-                color="primary"
-                fontWeight="600"
-                fontSize={'20px'}
-                fontStyle={'unset'}
-                sx={{ textDecoration: 'none' }}
-              >
+              <Typography color="primary" fontWeight="600" fontSize={'20px'} fontStyle={'unset'}>
                 My Blog 2
               </Typography>
             </Stack>
