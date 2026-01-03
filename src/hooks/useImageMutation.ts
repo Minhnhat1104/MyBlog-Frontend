@@ -1,6 +1,6 @@
 import axios from '~/tools/axios';
 import { useMutation } from '@tanstack/react-query';
-import { useSnackbar } from '~/base/hooks/useSnackbar';
+import { useSnackbar } from '~/hooks/useSnackbar';
 import { queryKeys } from '~/config/queryKeys';
 
 export const useImageMutation = () => {

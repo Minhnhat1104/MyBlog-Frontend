@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react';
 import { CssBaseline, GlobalStyles, StyledEngineProvider } from '@mui/material';
 import { createTheme, Theme, ThemeOptions, ThemeProvider, TypographyVariantsOptions } from '@mui/material/styles';
 
-import useConfig from '~/base/hooks/useConfig';
+import useConfig from '~/hooks/useConfig';
 import { CustomShadowProps } from '~/base/types/theme';
 
 import componentsOverride from './overrides';

@@ -12,27 +12,16 @@ export interface UseConfigProps {
 }
 
 const useConfig = () => {
-  // const { saveAppSetting } = useAppSetting();
   const [config, setConfig] = useRecoilState<DefaultConfigProps>(configAtom);
-  // console.log('🚀 ~ file: useConfig.ts:11 ~ useConfig ~ config', config);
 
   // save app config
   const handleAppSetting = (nConfig: DefaultConfigProps) => {
-    // console.log('handleAppSetting');
     setConfig(nConfig);
-    // saveAppSetting(nConfig);
   };
 
   return {
     ...config,
     onChangeContainer: () => {},
-    // onChangeLocalization: async (lang: LangType) => {
-    //   Ls.set('language-system', lang);
-    //   const nConfig = { ...config, i18n: lang };
-    //   handleAppSetting(nConfig);
-    //   //change language view
-    //   await i18n.changeLanguage(lang);
-    // },
     onChangeMode: (mode: ThemeMode) => {
       const nConfig = { ...config, mode: mode };
       handleAppSetting(nConfig);

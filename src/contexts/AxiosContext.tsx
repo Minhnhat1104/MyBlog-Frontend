@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
 import axios from '~/tools/axios';
 import jwt_decode from 'jwt-decode';
-import { useSnackbar } from '~/base/hooks/useSnackbar';
+import { useSnackbar } from '~/hooks/useSnackbar';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 interface AxiosContextProps {}

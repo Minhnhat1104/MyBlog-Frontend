@@ -5,7 +5,7 @@ import { faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Logo from '~/assets/img/logo';
 import React, { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import useConfig from '~/base/hooks/useConfig';
+import useConfig from '~/hooks/useConfig';
 import Write from '~/pages/Write';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
 import { useAuthMutation } from '~/hooks/useAuthMutation';

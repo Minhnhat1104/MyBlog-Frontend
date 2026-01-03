@@ -15,7 +15,7 @@ export const useSnackbar = () => {
       ),
       {
         pauseOnHover: true,
-        autoClose: false,
+        autoClose: 4000,
       }
     );
   };
@@ -28,7 +28,7 @@ export const useSnackbar = () => {
       ),
       {
         pauseOnHover: true,
-        autoClose: false,
+        autoClose: 4000,
       }
     );
   };
@@ -42,7 +42,7 @@ export const useSnackbar = () => {
       ),
       {
         pauseOnHover: true,
-        autoClose: false,
+        autoClose: 4000,
       }
     );
   };
@@ -56,7 +56,7 @@ export const useSnackbar = () => {
       ),
       {
         pauseOnHover: true,
-        autoClose: false,
+        autoClose: 4000,
       }
     );
   };
