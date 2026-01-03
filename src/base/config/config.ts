@@ -1,5 +1,4 @@
 import { DefaultConfigProps } from '~/base/types/config';
-import Storage from '~/base/utils/storages/ls';
 
 export const drawerWidth = 240;
 export const headerHeight = 48;

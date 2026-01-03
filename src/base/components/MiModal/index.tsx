@@ -129,10 +129,8 @@ const MiModal = (props: MiModalProps) => {
         }}
       >
         <Grid container justifyContent="space-between" alignItems="center" sx={{ px: 1 }}>
-          <Grid item sx={{ color: theme.palette.common.white }}>
-            {title}
-          </Grid>
-          <Grid item>
+          <Grid sx={{ color: theme.palette.common.white }}>{title}</Grid>
+          <Grid>
             {/* {!isMobile && (
               <Tooltip title={miState.isMinimize ? t('ncrm_common_maximize') : t('ncrm_common_minimize')} placement="top">
                 <IconButton

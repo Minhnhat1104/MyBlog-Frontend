@@ -46,19 +46,16 @@ function Write(props: WriteProps) {
   };
 
   const Footer = (
-    <Grid container justifyContent="space-between">
-      <Grid item></Grid>
-      <Grid item>
-        <LoadingButton
-          onClick={handleSubmit}
-          loading={mUpload.isLoading}
-          variant="contained"
-          sx={{ width: 'fit-content', margin: 'auto' }}
-        >
-          Upload
-        </LoadingButton>
-      </Grid>
-    </Grid>
+    <Stack direction="row" justifyContent="center" width={1}>
+      <LoadingButton
+        onClick={handleSubmit}
+        loading={mUpload.isLoading}
+        variant="contained"
+        sx={{ width: 'fit-content', margin: 'auto' }}
+      >
+        Upload
+      </LoadingButton>
+    </Stack>
   );
 
   return (
@@ -76,7 +73,7 @@ function Write(props: WriteProps) {
                   type="text"
                   placeholder="Enter your picture's name"
                   fullWidth
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setName(e.target.value)}
                 />
               </Box>
               <Box width={'100%'} alignItems="flex-start" justifyContent="flex-start">
@@ -90,7 +87,9 @@ function Write(props: WriteProps) {
                   rows={4}
                   multiline
                   placeholder="Enter your description"
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                    setDescription(e.target.value)
+                  }
                 />
               </Box>
               <Box width={'100%'} alignItems="flex-start" justifyContent="flex-start">
@@ -115,7 +114,7 @@ function Write(props: WriteProps) {
                     name="testImage"
                     type="file"
                     style={{ textAlign: 'left', width: 'fit-content' }}
-                    onChange={(e: any) => {
+                    onChange={(e) => {
                       setImageFile(e.target.files);
                     }}
                   />
