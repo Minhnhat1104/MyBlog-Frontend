@@ -22,13 +22,13 @@ const AxiosContext = ({}: AxiosContextProps) => {
   useEffect(() => {
     const id = axios.interceptors.response.use(
       (res) => {
-        if (res?.status === 401) {
-          enqueueError('Your login session is expried!');
-          navigate('/login');
-        }
         return res?.data;
       },
       (err) => {
+        if (err?.response?.status === 401) {
+          navigate('/login');
+          setUser(null);
+        }
         return Promise.reject(err?.response?.data);
       }
     );

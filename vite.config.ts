@@ -6,6 +6,7 @@ export default defineConfig(() => {
   return {
     build: {
       outDir: 'build',
+      sourcemap: false,
     },
     plugins: [react()],
     publicDir: './public', // keep static file when build
@@ -14,6 +15,14 @@ export default defineConfig(() => {
       alias: {
         '~': path.resolve(__dirname, './src'), // Alias for the 'src' folder
       },
+    },
+    server: {
+      watch: {
+        ignored: ['**/node_modules/**', '**/.git/**'],
+      },
+    },
+    hmr: {
+      overlay: false, // tránh block UI
     },
   };
 });
