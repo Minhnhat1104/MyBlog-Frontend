@@ -13,6 +13,7 @@ import ThemeCustomization from '~/base/themes';
 import { RecoilRoot } from 'recoil';
 import { Box, CssBaseline } from '@mui/material';
 import AxiosContext from '~/contexts/AxiosContext';
+import ToastContext from '~/contexts/ToastContext';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -28,33 +29,35 @@ function App() {
     <RecoilRoot>
       <ThemeCustomization>
         <CssBaseline />
-        <QueryClientProvider client={queryClient}>
-          <Router>
-            <AxiosContext>
-              <Routes>
-                {publicRoutes.map((route, index) => {
-                  let Layout = DefaultLayout;
-                  if (route.layout) {
-                    Layout = route.layout;
-                  }
-                  const Element = route.element;
-                  return (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      element={
-                        <Layout>
-                          <Element />
-                        </Layout>
-                      }
-                    />
-                  );
-                })}
-              </Routes>
-            </AxiosContext>
-          </Router>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <ToastContext>
+          <QueryClientProvider client={queryClient}>
+            <Router>
+              <AxiosContext>
+                <Routes>
+                  {publicRoutes.map((route, index) => {
+                    let Layout = DefaultLayout;
+                    if (route.layout) {
+                      Layout = route.layout;
+                    }
+                    const Element = route.element;
+                    return (
+                      <Route
+                        key={index}
+                        path={route.path}
+                        element={
+                          <Layout>
+                            <Element />
+                          </Layout>
+                        }
+                      />
+                    );
+                  })}
+                </Routes>
+              </AxiosContext>
+            </Router>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ToastContext>
       </ThemeCustomization>
     </RecoilRoot>
   );

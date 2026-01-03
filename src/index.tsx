@@ -2,19 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './base/components/App/App';
 import reportWebVitals from './reportWebVitals';
-import GlobalStyle from './components/GlobalStyle';
-import { ToastContainer } from 'react-toastify';
-import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <RecoilRoot>
-      <GlobalStyle>
-        <App />
-        <ToastContainer />
-      </GlobalStyle>
-    </RecoilRoot>
+    <App />
   </React.StrictMode>
 );
 
