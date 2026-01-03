@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DefaultLayout from '../../../layouts/DefaultLayout';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import publicRoutes from '~/routes';
 
 import '@fontsource/roboto/300.css';
@@ -12,7 +11,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeCustomization from '~/base/themes';
 import { RecoilRoot } from 'recoil';
 import { CssBaseline } from '@mui/material';
-import AxiosContext from '~/contexts/AxiosContext';
 import './App.css';
 import ToastContext from '~/contexts/ToastContext';
 
@@ -26,36 +24,15 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const router = createBrowserRouter(publicRoutes);
+
   return (
     <RecoilRoot>
       <ThemeCustomization>
         <CssBaseline />
         <ToastContext>
           <QueryClientProvider client={queryClient}>
-            <Router>
-              <AxiosContext>
-                <Routes>
-                  {publicRoutes.map((route, index) => {
-                    let Layout = DefaultLayout;
-                    if (route.layout) {
-                      Layout = route.layout;
-                    }
-                    const Element = route.element;
-                    return (
-                      <Route
-                        key={index}
-                        path={route.path}
-                        element={
-                          <Layout>
-                            <Element />
-                          </Layout>
-                        }
-                      />
-                    );
-                  })}
-                </Routes>
-              </AxiosContext>
-            </Router>
+            <RouterProvider router={router} />
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </ToastContext>

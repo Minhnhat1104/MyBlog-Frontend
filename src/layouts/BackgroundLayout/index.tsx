@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Stack } from '@mui/material';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
 import background from '~/assets/img/img.jpg';
+import { Outlet } from 'react-router-dom';
 
 function BackgroundLayout({ children }: any) {
   return (
@@ -24,7 +25,7 @@ function BackgroundLayout({ children }: any) {
           justifyContent: 'center',
         }}
       >
-        {children}
+        <Outlet />
       </Box>
     </Stack>
   );

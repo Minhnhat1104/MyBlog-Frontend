@@ -2,6 +2,7 @@ import Header from '../Component/Header';
 import React from 'react';
 import { Box, Stack } from '@mui/material';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
+import { Outlet } from 'react-router-dom';
 
 function BackgroundLayout({ children }: any) {
   return (
@@ -30,7 +31,7 @@ function BackgroundLayout({ children }: any) {
           overflowY: 'auto',
         }}
       >
-        {children}
+        <Outlet />
       </Box>
     </Stack>
   );

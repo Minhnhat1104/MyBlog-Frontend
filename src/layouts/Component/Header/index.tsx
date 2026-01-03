@@ -11,6 +11,7 @@ import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/con
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
+import { Image, Upload } from '@mui/icons-material';
 
 function Header() {
   const user = useRecoilValue(userState);
@@ -61,10 +62,10 @@ function Header() {
           {user ? (
             <Stack direction="row" alignItems="center" spacing={1}>
               <IconButton size="medium" onClick={() => setOpenWrite(true)}>
-                <FontAwesomeIcon icon={faUpload as IconProp} />
+                <Upload />
               </IconButton>
               <IconButton size="medium" href="/">
-                <FontAwesomeIcon icon={faImage as IconProp} />
+                <Image />
               </IconButton>
               <Switch
                 checked={mode === 'light'}

@@ -5,13 +5,11 @@ import { userState } from '~/atoms';
 import axios from '~/tools/axios';
 import jwt_decode from 'jwt-decode';
 import { useSnackbar } from '~/base/hooks/useSnackbar';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-interface AxiosContextProps {
-  children: ReactNode;
-}
+interface AxiosContextProps {}
 
-const AxiosContext = ({ children }: AxiosContextProps) => {
+const AxiosContext = ({}: AxiosContextProps) => {
   const [user, setUser] = useRecoilState(userState);
   const { enqueueError } = useSnackbar();
   const navigate = useNavigate();
@@ -65,7 +63,11 @@ const AxiosContext = ({ children }: AxiosContextProps) => {
     }
   }, [user]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default AxiosContext;

@@ -1,40 +1,50 @@
 import { useState } from 'react';
-import Button from '~/components/Button';
-import classNames from 'classnames/bind';
-import style from './Upload.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-import { LoadingButton } from '@mui/lab';
 import { useImageMutation } from '~/hooks/useImageMutation';
-import { Box, Breakpoint, Divider, Grid, InputLabel, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Button, InputLabel, Stack, TextField, Typography, useTheme } from '@mui/material';
 import MiModal from '~/base/components/MiModal';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '~/config/queryKeys';
 import { SET_TIMEOUT } from '~/base/config/constants';
+import { useRecoilValue } from 'recoil';
+import { userState } from '~/atoms';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { FileWithPath } from 'react-dropzone/.';
+import ImageDropZone from '~/components/ImageDropZone';
 
 interface WriteProps {
   isOpen: boolean;
   onClose: (value: any) => void;
 }
 
+interface UploadFormData {
+  name: string;
+  description: string;
+  images: FileWithPath[];
+}
+
 function Write(props: WriteProps) {
   const { isOpen, onClose } = props;
   const theme = useTheme();
   const queryClient = useQueryClient();
-  const user = useSelector((state: any) => state.auth.login?.currentUser);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageFile, setImageFile] = useState<any>(null);
+  const user = useRecoilValue(userState);
 
-  const dispatch = useDispatch();
   const { mUpload } = useImageMutation();
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<UploadFormData>();
+
+  const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
     const params = {
-      imageFile,
-      name,
-      description,
-      user,
+      imageFile: data?.images?.[0],
+      name: data?.name,
+      description: data?.description,
+      creatorId: user?.id,
     };
     mUpload.mutate(params, {
       onSuccess(data, variables, context) {
@@ -45,85 +55,42 @@ function Write(props: WriteProps) {
     });
   };
 
-  const Footer = (
-    <Stack direction="row" justifyContent="center" width={1}>
-      <LoadingButton
-        onClick={handleSubmit}
-        loading={mUpload.isLoading}
-        variant="contained"
-        sx={{ width: 'fit-content', margin: 'auto' }}
-      >
-        Upload
-      </LoadingButton>
-    </Stack>
-  );
-
   return (
-    <MiModal title={'Upload image'} isOpen={isOpen} size="sm" onClose={onClose} footer={Footer}>
-      {user ? (
-        <Box p={2}>
-          <Box width="100%">
-            <Stack spacing={1} width={'100%'} alignItems="flex-start">
-              <Box width={'100%'} alignItems="flex-start" justifyContent="flex-start">
-                <InputLabel sx={{ fontWeight: 500, color: theme.palette.secondary.main, textAlign: 'left' }}>
-                  Picture's name
-                </InputLabel>
-                <TextField
-                  name="name"
-                  type="text"
-                  placeholder="Enter your picture's name"
-                  fullWidth
-                  onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setName(e.target.value)}
-                />
-              </Box>
-              <Box width={'100%'} alignItems="flex-start" justifyContent="flex-start">
-                <InputLabel sx={{ fontWeight: 500, color: theme.palette.secondary.main, textAlign: 'left' }}>
-                  Description
-                </InputLabel>
-                <TextField
-                  id="description"
-                  fullWidth
-                  name="description"
-                  rows={4}
-                  multiline
-                  placeholder="Enter your description"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                    setDescription(e.target.value)
-                  }
-                />
-              </Box>
-              <Box width={'100%'} alignItems="flex-start" justifyContent="flex-start">
-                <InputLabel sx={{ fontWeight: 500, color: theme.palette.secondary.main, textAlign: 'left' }}>
-                  Images
-                </InputLabel>
-                <Box
-                  sx={{
-                    borderRadius: 1,
-                    border: `1px solid ${theme.palette.grey[300]}`,
-                    py: 1,
-                    px: 2,
-                    width: '100%',
-                  }}
-                  display="flex"
-                  alignItems="flex-start"
-                  justifyContent="flex-start"
-                >
-                  <input
-                    multiple
-                    // className={cx('file-input')}
-                    name="testImage"
-                    type="file"
-                    style={{ textAlign: 'left', width: 'fit-content' }}
-                    onChange={(e) => {
-                      setImageFile(e.target.files);
-                    }}
-                  />
-                </Box>
-              </Box>
-            </Stack>
-          </Box>
-        </Box>
-      ) : null}
+    <MiModal title={'Post Image'} isOpen={isOpen} size="sm" onClose={onClose}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2} width={'100%'} alignItems="flex-start" p={2}>
+          <TextField
+            label="Name"
+            helperText={errors.name?.message}
+            error={!!errors.name}
+            {...register('name', { required: true, maxLength: 50 })}
+            fullWidth
+          />
+
+          <TextField
+            label="Description"
+            helperText={errors.description?.message}
+            error={!!errors.description}
+            {...register('description', { required: true, maxLength: 50 })}
+            multiline
+            minRows={2}
+            fullWidth
+          />
+
+          <Controller name="images" control={control} render={({ field }) => <ImageDropZone {...field} />} />
+
+          <Stack direction="row" justifyContent="center" width={1}>
+            <Button
+              type="submit"
+              loading={mUpload.isPending}
+              variant="contained"
+              sx={{ width: 'fit-content', margin: 'auto' }}
+            >
+              Upload
+            </Button>
+          </Stack>
+        </Stack>
+      </form>
     </MiModal>
   );
 }
