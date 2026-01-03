@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Stack, Switch, Typography, useTheme } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Logo from '~/assets/img/logo';
@@ -9,18 +9,24 @@ import useConfig from '~/hooks/useConfig';
 import Write from '~/pages/Write';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/config/config';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
 import { Image, Upload } from '@mui/icons-material';
+import { COOKIE_KEY, cookieService } from '~/tools/storages';
 
 function Header() {
-  const user = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState(userState);
   const theme = useTheme();
   const { mode, onChangeMode } = useConfig();
   const [openWrite, setOpenWrite] = useState<boolean>(false);
   const { mUserLogout } = useAuthMutation();
-  const handleLogout = () => {
-    mUserLogout.mutateAsync({});
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await mUserLogout.mutateAsync({});
+    setUser(null);
+    cookieService.remove(COOKIE_KEY.REFRESH_TOKEN);
+    navigate('/login');
   };
 
   return (

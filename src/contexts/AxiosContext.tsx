@@ -67,7 +67,10 @@ const AxiosContext = ({}: AxiosContextProps) => {
 
             setUser(newUser);
             config.headers['token'] = `Bearer ${res?.data?.accessToken}`;
+          } else {
+            config.headers['token'] = `Bearer ${user?.accessToken}`;
           }
+
           return config;
         },
         (err) => {
