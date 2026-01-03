@@ -85,8 +85,10 @@ function Header() {
             </Stack>
           ) : (
             <Stack direction="row" alignItems="center" spacing={1}>
-              <Button href="/login">Login</Button>
-              <Button variant="outlined" href="/Register">
+              <Button component={Link} to="/login">
+                Login
+              </Button>
+              <Button variant="outlined" component={Link} to="/register">
                 Register
               </Button>
             </Stack>

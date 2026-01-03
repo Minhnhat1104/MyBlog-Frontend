@@ -1,11 +1,11 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, OutlinedInput, OutlinedInputProps, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { forwardRef, RefObject, useState } from 'react';
 import { TextFieldProps } from '@mui/material/TextField';
 
 type PasswordInputProps = TextFieldProps;
 
-const PasswordInput = (props: PasswordInputProps) => {
+const PasswordInput: React.ForwardRefRenderFunction<HTMLDivElement, PasswordInputProps> = (props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -20,6 +20,7 @@ const PasswordInput = (props: PasswordInputProps) => {
 
   return (
     <TextField
+      ref={ref}
       type={showPassword ? 'text' : 'password'}
       slotProps={{
         input: {
@@ -39,9 +40,9 @@ const PasswordInput = (props: PasswordInputProps) => {
         },
       }}
       label="Password"
-      //   {...props}
+      {...props}
     />
   );
 };
 
-export default PasswordInput;
+export default forwardRef(PasswordInput);

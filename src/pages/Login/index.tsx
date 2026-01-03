@@ -55,7 +55,7 @@ function Login() {
             error={!!errors.password}
             {...register('password', { required: true, maxLength: 50 })}
           />
-          <Stack direction="row" spacing={1} alignItems="center" justifyContent="center" py={1}>
+          <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
             <Typography>Don't have an account yet?</Typography>
             <Box sx={{ cursor: 'pointer' }} onClick={() => navigate('/register')}>
               <Typography color={theme.palette.primary.main}>Register one for free</Typography>

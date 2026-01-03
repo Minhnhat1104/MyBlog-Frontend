@@ -10,9 +10,6 @@ export const defaultLayoutWidth = '1300px';
 export const SPLIT_MIN_SIZE = 380;
 export const SPLIT_MAX_SIZE = 380;
 
-const Ls = new Storage();
-const languageTranslator = Ls.get('language-translator') ? (Ls.get('language-translator') as string) : 'false';
-
 const config: DefaultConfigProps = {
   defaultPath: '/',
   // fontFamily: `'Inter',sans-serif`,
@@ -23,7 +20,7 @@ const config: DefaultConfigProps = {
   mode: 'light',
   presetColor: 'default',
   themeDirection: 'ltr',
-  enableTrans: languageTranslator === 'true',
+  enableTrans: false,
 };
 
 export default config;
