@@ -79,7 +79,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
         axios.interceptors.request.eject(id);
       };
     }
-  }, [user]);
+  }, [user?.id]);
 
   return <>{isLoading ? <LoadingCircular fullHeight /> : <Outlet />}</>;
 };

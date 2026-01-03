@@ -44,7 +44,12 @@ function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZon
     maxFiles: 1,
     accept: { 'image/*': [] },
     onDropAccepted(files, event) {
-      onChange(files);
+      onChange(
+        files?.map((_item: any) => {
+          _item.src = URL.createObjectURL(_item) || '';
+          return _item;
+        })
+      );
     },
   });
 
@@ -66,7 +71,7 @@ function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZon
       </div>
       <aside>
         <List>
-          {acceptedFiles.map((file) => (
+          {acceptedFiles.map((file: any) => (
             <ListItem key={file.path} sx={{ pl: 0, display: 'flex', alignItems: 'center' }}>
               <Box
                 sx={{
@@ -78,11 +83,7 @@ function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZon
                   flexShrink: 0,
                 }}
               />
-              <img
-                alt={file?.name}
-                src={URL.createObjectURL(file) || ''}
-                style={{ width: 24, height: 24, marginRight: 8 }}
-              />
+              <img alt={file?.name} src={file?.src} style={{ width: 24, height: 24, marginRight: 8 }} />
               <Typography>
                 {file.path} - {file.size} bytes
               </Typography>
