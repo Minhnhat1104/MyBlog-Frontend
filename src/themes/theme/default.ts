@@ -1,7 +1,7 @@
 import { PalettesProps } from '@ant-design/colors';
 import { PaletteColorOptions } from '@mui/material/styles';
 
-import { PaletteThemeProps } from '~/base/types/theme';
+import { PaletteThemeProps } from '~/themes/types/theme';
 
 const Default = (colors: PalettesProps): PaletteThemeProps => {
   const { blue, red, gold, cyan, green, grey, magenta, purple, orange, yellow, lime, volcano } = colors;

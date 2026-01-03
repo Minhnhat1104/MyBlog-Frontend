@@ -1,8 +1,8 @@
 import { PalettesProps, presetDarkPalettes, presetPalettes } from '@ant-design/colors';
 import { alpha, createTheme } from '@mui/material/styles';
 
-import { PresetColor, ThemeMode } from '~/base/types/config';
-import { PaletteThemeProps } from '~/base/types/theme';
+import { PresetColor, ThemeMode } from '~/themes/types/config';
+import { PaletteThemeProps } from '~/themes/types/theme';
 
 import ThemeOption from './theme';
 

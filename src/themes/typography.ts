@@ -1,6 +1,6 @@
 import { Theme, TypographyVariantsOptions } from '@mui/material/styles';
 
-import { ThemeMode } from '~/base/types/config';
+import { ThemeMode } from '~/themes/types/config';
 
 const Typography = (mode: ThemeMode, fontFamily: string, theme: Theme): TypographyVariantsOptions => ({
   htmlFontSize: 16, // 15

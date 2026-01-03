@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 // types
-import { DefaultConfigProps, PresetColor, ThemeDirection, ThemeMode } from '~/base/types/config';
+import { DefaultConfigProps, PresetColor, ThemeDirection, ThemeMode } from '~/themes/types/config';
 import { configAtom } from '~/atoms/config';
 import _ from 'lodash';
 // import { useAppSetting } from './user-setting/useAppSetting';

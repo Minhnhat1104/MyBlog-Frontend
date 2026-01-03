@@ -1,7 +1,7 @@
 import { PalettesProps } from '@ant-design/colors';
 
-import { PresetColor, ThemeMode } from '~/base/types/config';
-import { PaletteThemeProps } from '~/base/types/theme';
+import { PresetColor, ThemeMode } from '~/themes/types/config';
+import { PaletteThemeProps } from '~/themes/types/theme';
 
 import Default from './default';
 

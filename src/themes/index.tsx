@@ -4,7 +4,7 @@ import { CssBaseline, GlobalStyles, StyledEngineProvider } from '@mui/material';
 import { createTheme, Theme, ThemeOptions, ThemeProvider, TypographyVariantsOptions } from '@mui/material/styles';
 
 import useConfig from '~/hooks/useConfig';
-import { CustomShadowProps } from '~/base/types/theme';
+import { CustomShadowProps } from '~/themes/types/theme';
 
 import componentsOverride from './overrides';
 import Palette from './palette';

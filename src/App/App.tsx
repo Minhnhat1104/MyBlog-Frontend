@@ -8,7 +8,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ThemeCustomization from '~/base/themes';
+import ThemeCustomization from '~/themes';
 import { RecoilRoot } from 'recoil';
 import { CssBaseline, Stack } from '@mui/material';
 import './App.css';

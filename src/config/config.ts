@@ -1,4 +1,4 @@
-import { DefaultConfigProps } from '~/base/types/config';
+import { DefaultConfigProps } from '~/themes/types/config';
 
 export const drawerWidth = 240;
 export const headerHeight = 48;
