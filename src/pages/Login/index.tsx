@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, Stack, TextField, Typography, useTheme } from '@mui/material';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import PasswordInput from '~/base/components/PasswordInput';
 
 type LoginFormData = {
   username: string;
@@ -40,23 +41,18 @@ function Login() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack sx={{ background: theme.palette.common.white, p: 3, borderRadius: 3, width: 600 }} spacing={3}>
           <Typography variant="h1" fontWeight={500} textAlign="center">
-            Login in
+            Welcome back
           </Typography>
           <TextField
-            size="medium"
             label="Username"
             helperText={errors.username?.message}
             error={!!errors.username}
-            // placeholder="Enter your username"
             {...register('username', { required: true, maxLength: 50 })}
           />
-          <TextField
-            size="medium"
+          <PasswordInput
             label="Password"
-            type="password"
             helperText={errors.password?.message}
             error={!!errors.password}
-            // placeholder="Enter your password"
             {...register('password', { required: true, maxLength: 50 })}
           />
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="center" py={1}>
@@ -66,7 +62,7 @@ function Login() {
             </Box>
           </Stack>
           <Button type="submit" variant="contained">
-            Continue
+            Log in
           </Button>
         </Stack>
       </form>

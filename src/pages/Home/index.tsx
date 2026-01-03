@@ -1,7 +1,6 @@
 import React, { lazy } from 'react';
 
 import { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
 
 import useImages from '~/hooks/useImages';
 
@@ -11,9 +10,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useImageMutation } from '~/hooks/useImageMutation';
 import { Paging } from '~/types';
 import Image from '~/components/Image';
+import { useRecoilValue } from 'recoil';
+import { userState } from '~/atoms';
 
 function Home() {
-  const user = useSelector((state: any) => state.auth.login?.currentUser);
+  const user = useRecoilValue(userState);
   const [allImages, setAllImages] = useState([]);
   const [paging, setPaging] = useState<Paging>({ page: 1, size: 10 });
   const {
@@ -44,12 +45,8 @@ function Home() {
     return <p>Error: </p>;
   }
 
-  if (!user) {
-    return <p>Please login first!</p>;
-  }
-
   if (isInitialLoading) {
-    return <LoadingCircular />;
+    return <LoadingCircular fullHeight />;
   }
 
   return (
@@ -67,20 +64,16 @@ function Home() {
         }}
         style={{ display: 'flex', flexDirection: 'column-reverse' }} //To put endMessage and loader to the top.
         inverse={true} //
-        hasMore={true}
-        scrollThreshold={0}
-        loader={
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 50 }}>
-            <CircularProgress />
-          </Box>
-        }
+        hasMore={false}
+        // scrollThreshold={0}
+        loader={<LoadingCircular />}
         height={'100%'}
-        hasChildren={results?.length}
+        hasChildren={!!results?.length}
       >
         <Grid container>
           {results?.map((singleData: any, i: number) => {
             return (
-              <Grid item xs={12} md={4} key={singleData._id}>
+              <Grid key={singleData._id} size={{ xs: 12, md: 4 }}>
                 <Image user={user} handleDelete={handleDelete} singleData={singleData} />
               </Grid>
             );

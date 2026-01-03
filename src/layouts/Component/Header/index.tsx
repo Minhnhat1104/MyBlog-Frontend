@@ -1,6 +1,5 @@
 import { Box, Button, IconButton, Stack, Switch, Typography, useTheme } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Logo from '~/assets/img/logo';
@@ -10,9 +9,11 @@ import useConfig from '~/base/hooks/useConfig';
 import Write from '~/pages/Write';
 import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
+import { useRecoilValue } from 'recoil';
+import { userState } from '~/atoms';
 
 function Header() {
-  const user = useSelector((state: any) => state.auth.login?.currentUser);
+  const user = useRecoilValue(userState);
   const theme = useTheme();
   const { mode, onChangeMode } = useConfig();
   const [openWrite, setOpenWrite] = useState<boolean>(false);
