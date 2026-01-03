@@ -1,11 +1,39 @@
+import React, { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
 import axios from '~/tools/axios';
 import jwt_decode from 'jwt-decode';
+import { useSnackbar } from '~/base/hooks/useSnackbar';
+import { useNavigate } from 'react-router-dom';
 
-export const useAxioSetup = () => {
+interface AxiosContextProps {
+  children: ReactNode;
+}
+
+const AxiosContext = ({ children }: AxiosContextProps) => {
   const [user, setUser] = useRecoilState(userState);
+  const { enqueueError } = useSnackbar();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const id = axios.interceptors.response.use(
+      (res) => {
+        if (res?.status === 401) {
+          enqueueError('Your login session is expried!');
+          navigate('/login');
+        }
+        return res?.data;
+      },
+      (err) => {
+        return Promise.reject(err?.response?.data);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(id);
+    };
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -36,4 +64,8 @@ export const useAxioSetup = () => {
       };
     }
   }, [user]);
+
+  return <>{children}</>;
 };
+
+export default AxiosContext;

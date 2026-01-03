@@ -4,6 +4,8 @@ import { Box, Button, Stack, TextField, Typography, useTheme } from '@mui/materi
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import PasswordInput from '~/base/components/PasswordInput';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '~/atoms';
 
 type LoginFormData = {
   username: string;
@@ -14,6 +16,7 @@ function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
   const { mUserLogin } = useAuthMutation();
+  const setUser = useSetRecoilState(userState);
 
   const {
     register,
@@ -29,8 +32,9 @@ function Login() {
         password: data?.password,
       },
       {
-        onSuccess: () => {
-          navigate('/login');
+        onSuccess: (res) => {
+          setUser(res?.data);
+          navigate('/home');
         },
       }
     );

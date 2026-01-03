@@ -2,7 +2,6 @@ import axios from '~/tools/axios';
 import { useMutation } from '@tanstack/react-query';
 import { useSnackbar } from '~/base/hooks/useSnackbar';
 import { queryKeys } from '~/config/queryKeys';
-
 export const useAuthMutation = () => {
   const { enqueueSuccess, enqueueError } = useSnackbar();
 
@@ -16,8 +15,8 @@ export const useAuthMutation = () => {
     onSuccess(data: any, variables, context) {
       enqueueSuccess('Register user successfully!');
     },
-    onError(data, variables, context) {
-      enqueueError('Register user failed!');
+    onError(data: any, variables, context) {
+      enqueueError(data?.msg || 'Register user failed!');
     },
   });
 
@@ -28,11 +27,11 @@ export const useAuthMutation = () => {
 
       return res;
     },
-    onSuccess(data: any, variables, context) {
+    onSuccess(res: any, variables, context) {
       enqueueSuccess('Login successfully!');
     },
-    onError(data, variables, context) {
-      enqueueError('Login failed!');
+    onError(res: any, variables, context) {
+      enqueueError(res?.msg || 'Login failed!');
     },
   });
 
@@ -46,8 +45,8 @@ export const useAuthMutation = () => {
     onSuccess(data: any, variables, context) {
       enqueueSuccess('Logout successfully!');
     },
-    onError(data, variables, context) {
-      enqueueError('Logout failed!');
+    onError(data: any, variables, context) {
+      enqueueError(data?.msg || 'Logout failed!');
     },
   });
 

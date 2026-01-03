@@ -12,6 +12,7 @@ import { Paging } from '~/types';
 import Image from '~/components/Image';
 import { useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
+import NoData from '~/components/NoData';
 
 function Home() {
   const user = useRecoilValue(userState);
@@ -47,6 +48,10 @@ function Home() {
 
   if (isInitialLoading) {
     return <LoadingCircular fullHeight />;
+  }
+
+  if (!results?.length) {
+    return <NoData />;
   }
 
   return (

@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeCustomization from '~/base/themes';
 import { RecoilRoot } from 'recoil';
 import { Box, CssBaseline } from '@mui/material';
+import AxiosContext from '~/contexts/AxiosContext';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -29,26 +30,28 @@ function App() {
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
           <Router>
-            <Routes>
-              {publicRoutes.map((route, index) => {
-                let Layout = DefaultLayout;
-                if (route.layout) {
-                  Layout = route.layout;
-                }
-                const Element = route.element;
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={
-                      <Layout>
-                        <Element />
-                      </Layout>
-                    }
-                  />
-                );
-              })}
-            </Routes>
+            <AxiosContext>
+              <Routes>
+                {publicRoutes.map((route, index) => {
+                  let Layout = DefaultLayout;
+                  if (route.layout) {
+                    Layout = route.layout;
+                  }
+                  const Element = route.element;
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={
+                        <Layout>
+                          <Element />
+                        </Layout>
+                      }
+                    />
+                  );
+                })}
+              </Routes>
+            </AxiosContext>
           </Router>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

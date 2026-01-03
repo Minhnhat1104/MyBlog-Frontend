@@ -39,7 +39,6 @@ const PasswordInput: React.ForwardRefRenderFunction<HTMLDivElement, PasswordInpu
           ),
         },
       }}
-      label="Password"
       {...props}
     />
   );
