@@ -10,7 +10,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeCustomization from '~/base/themes';
 import { RecoilRoot } from 'recoil';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Stack } from '@mui/material';
 import './App.css';
 import ToastContext from '~/contexts/ToastContext';
 
@@ -27,17 +27,19 @@ function App() {
   const router = createBrowserRouter(publicRoutes);
 
   return (
-    <RecoilRoot>
-      <ThemeCustomization>
-        <CssBaseline />
-        <ToastContext>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
-        </ToastContext>
-      </ThemeCustomization>
-    </RecoilRoot>
+    <Stack sx={{ width: 1, height: '100vh' }}>
+      <RecoilRoot>
+        <ThemeCustomization>
+          <CssBaseline />
+          <ToastContext>
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={router} />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+          </ToastContext>
+        </ThemeCustomization>
+      </RecoilRoot>
+    </Stack>
   );
 }
 

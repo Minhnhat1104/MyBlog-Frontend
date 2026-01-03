@@ -77,7 +77,11 @@ function Write(props: WriteProps) {
             fullWidth
           />
 
-          <Controller name="images" control={control} render={({ field }) => <ImageDropZone {...field} />} />
+          <Controller
+            name="images"
+            control={control}
+            render={({ field }) => <ImageDropZone value={field?.value} onChange={field?.onChange} />}
+          />
 
           <Stack direction="row" justifyContent="center" width={1}>
             <Button

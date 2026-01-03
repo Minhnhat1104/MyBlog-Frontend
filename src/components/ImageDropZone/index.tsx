@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import { Box, List, ListItem, Stack, Typography, useTheme } from '@mui/material';
+import React, { CSSProperties, useMemo } from 'react';
 import { FileWithPath, useDropzone } from 'react-dropzone';
 
 interface ImageDropZoneProps {
@@ -8,7 +9,7 @@ interface ImageDropZoneProps {
   disabled?: boolean;
 }
 
-const baseStyle = {
+const baseStyle: CSSProperties = {
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
@@ -36,17 +37,18 @@ const rejectStyle = {
   borderColor: '#ff1744',
 };
 
-function ImageDropZone({ name, value, onChange, disabled }: ImageDropZoneProps) {
+function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZoneProps) {
+  const theme = useTheme();
   const { acceptedFiles, getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     disabled,
+    maxFiles: 1,
     accept: { 'image/*': [] },
     onDropAccepted(files, event) {
-      console.log('🚀 ~ ImageDropZone ~ files:', files);
       onChange(files);
     },
   });
 
-  const style = useMemo(
+  const style = useMemo<CSSProperties>(
     () => ({
       ...baseStyle,
       ...(isFocused ? focusedStyle : {}),
@@ -56,21 +58,37 @@ function ImageDropZone({ name, value, onChange, disabled }: ImageDropZoneProps) 
     [isFocused, isDragAccept, isDragReject]
   );
 
-  const files = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
-
   return (
-    <section className="container">
-      <div {...getRootProps({ className: 'dropzone' })}>
+    <section style={{ width: '100%' }}>
+      <div {...getRootProps({ style })}>
         <input name={name} {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </div>
       <aside>
-        <h4>Files</h4>
-        <ul>{files}</ul>
+        <List>
+          {acceptedFiles.map((file) => (
+            <ListItem key={file.path} sx={{ pl: 0, display: 'flex', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  width: 5,
+                  height: 5,
+                  borderRadius: 999,
+                  background: theme.palette.common.black,
+                  mr: 1,
+                  flexShrink: 0,
+                }}
+              />
+              <img
+                alt={file?.name}
+                src={URL.createObjectURL(file) || ''}
+                style={{ width: 24, height: 24, marginRight: 8 }}
+              />
+              <Typography>
+                {file.path} - {file.size} bytes
+              </Typography>
+            </ListItem>
+          ))}
+        </List>
       </aside>
     </section>
   );

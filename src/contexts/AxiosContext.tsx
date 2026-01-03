@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
@@ -6,6 +6,8 @@ import axios from '~/tools/axios';
 import jwt_decode from 'jwt-decode';
 import { useSnackbar } from '~/hooks/useSnackbar';
 import { Outlet, useNavigate } from 'react-router-dom';
+import LoadingCircular from '~/components/LoadingCircular';
+import { COOKIE_KEY, cookieService } from '~/tools/storages';
 
 interface AxiosContextProps {}
 
@@ -13,6 +15,9 @@ const AxiosContext = ({}: AxiosContextProps) => {
   const [user, setUser] = useRecoilState(userState);
   const { enqueueError } = useSnackbar();
   const navigate = useNavigate();
+
+  const refreshToken = cookieService.get(COOKIE_KEY.REFRESH_TOKEN);
+  const [isLoading, setIsLoading] = useState<boolean>(refreshToken ? true : false);
 
   useEffect(() => {
     const id = axios.interceptors.response.use(
@@ -27,6 +32,19 @@ const AxiosContext = ({}: AxiosContextProps) => {
         return Promise.reject(err?.response?.data);
       }
     );
+
+    (async () => {
+      if (refreshToken) {
+        try {
+          const res = await axios.post('/v1/auth/refresh');
+          setUser(res?.data);
+        } catch (e) {
+          console.log('Get infor error:', e);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    })();
 
     return () => {
       axios.interceptors.response.eject(id);
@@ -63,11 +81,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
     }
   }, [user]);
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <>{isLoading ? <LoadingCircular fullHeight /> : <Outlet />}</>;
 };
 
 export default AxiosContext;
