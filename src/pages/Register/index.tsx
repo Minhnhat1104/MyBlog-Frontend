@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Stack, TextField, Typography, useTheme } from '@mui/material';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import PasswordInput from '~/base/components/PasswordInput';
+import PasswordInput from '~/components/PasswordInput';
 
 type RegisterFormData = {
   email: string;

@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import useConfig from '~/hooks/useConfig';
 import Write from '~/pages/Write';
-import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/base/config/config';
+import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/config/config';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
