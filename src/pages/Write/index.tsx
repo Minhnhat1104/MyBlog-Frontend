@@ -56,7 +56,7 @@ function Write(props: WriteProps) {
   };
 
   return (
-    <MiModal title={'Post Image'} isOpen={isOpen} size="sm" onClose={onClose}>
+    <MiModal title={'Post Image'} isOpen={isOpen} size="sm" onClose={onClose} allowFullScreen>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2} width={'100%'} alignItems="flex-start" p={2}>
           <TextField
