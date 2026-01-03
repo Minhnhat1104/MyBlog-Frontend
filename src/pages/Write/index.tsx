@@ -40,13 +40,13 @@ function Write(props: WriteProps) {
   } = useForm<UploadFormData>();
 
   const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
-    const params = {
-      imageFile: data?.images?.[0],
-      name: data?.name,
-      description: data?.description,
-      creatorId: user?.id,
-    };
-    mUpload.mutate(params, {
+    const formData = new FormData();
+    formData.append('imageFile', data?.images?.[0]);
+    formData.append('name', data?.name);
+    formData.append('description', data?.description);
+    formData.append('creatorId', user?.id?.toString() || '');
+
+    mUpload.mutate(formData, {
       onSuccess(data, variables, context) {
         setTimeout(() => {
           queryClient.invalidateQueries([queryKeys.imageList]);
