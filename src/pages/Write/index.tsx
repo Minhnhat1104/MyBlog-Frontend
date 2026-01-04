@@ -44,7 +44,7 @@ function Write(props: WriteProps) {
     formData.append('imageFile', data?.images?.[0]);
     formData.append('name', data?.name);
     formData.append('description', data?.description);
-    formData.append('creatorId', user?.id?.toString() || '');
+    formData.append('creator_id', user?.id?.toString() || '');
 
     mUpload.mutate(formData, {
       onSuccess(data, variables, context) {

@@ -20,9 +20,9 @@ export default defineConfig(() => {
       watch: {
         ignored: ['**/node_modules/**', '**/.git/**'],
       },
-    },
-    hmr: {
-      overlay: false, // tránh block UI
+      hmr: {
+        overlay: false, // tránh block UI
+      },
     },
   };
 });
