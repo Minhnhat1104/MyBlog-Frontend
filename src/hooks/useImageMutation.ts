@@ -8,21 +8,16 @@ export const useImageMutation = () => {
   const mUpload = useMutation({
     mutationKey: [queryKeys.imageUpload],
     mutationFn: async (params: any) => {
-      try {
-        await axios.post('/v1/image/upload', params, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      } catch (err) {
-        alert(err);
-        console.log(err);
-      }
+      await axios.post('/v1/image/upload', params, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
     },
-    onSuccess(data, variables, context) {
+    onSuccess(data: any, variables, context) {
       enqueueSuccess('Update Images successfully!');
     },
-    onError(data, variables, context) {
+    onError(data: any, variables, context) {
       enqueueError('Update Images fail!');
     },
   });
